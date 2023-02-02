@@ -1,0 +1,21 @@
+################################ ON WORKER NODE ###########################################################
+# The below steps are to be done after successful execution of Kuber setup script
+
+  kubeadm version && kubelet --version && kubectl version
+  
+  # Replace the IP below as per your setup, tokem etc, will be provided as per your setup - DONT COPY PASTE below lines.
+  
+  kubeadm join 162.251.147.180:6443 --token awilnt.qskrvqbkbnq1tzea  --discovery-token-ca-cert-hash sha256:869387b8708df3a0d587c9670f568292bb1aafd4776ee8f1f4fa5096208e5dc0
+
+  # Execute below command if the above command fails due to containerd, restart containerd and join again.
+
+  rm /etc/containerd/config.toml 
+  
+  systemctl restart containerd.service 
+  
+  kubeadm join 162.251.147.180:6443 --token awilnt.qskrvqbkbnq1tzea  --discovery-token-ca-cert-hash sha256:869387b8708df3a0d587c9670f568292bb1aafd4776ee8f1f4fa50
+  
+  
+  # IF YOU WANT TO RESET EVERYTHING -
+  sudo kubeadm reset
+  
