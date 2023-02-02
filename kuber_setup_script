@@ -5,8 +5,11 @@ apt upgrade
 
 echo is this IP of your machine?
 
+# Change the IP and hostnames as per your setup. Also comment the lines when doing it on worker or control
+# plane to avoid duplicate lines if you run this script more than one's.
+
 echo " " >> /etc/hosts
-echo "192.168.1.11 k8w1" >> /etc/hosts
+echo "192.168.1.11 k8w1" >> /etc/hosts         
 echo "192.168.1.10 k8ctrl" >> /etc/hosts
 
 hostnamectl set-hostname k8ctrl
