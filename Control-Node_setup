@@ -1,4 +1,4 @@
-   ON Control Plane
+   #The below steps are to done after execution with success of Kuber setup script ON Control Plane
    
    kubeadm init --pod-network-cidr=10.244.0.0/16 --apiserver-advertise-address=<162.251.147.180> # Replace your IP
    lsb_release -a 
