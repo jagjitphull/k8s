@@ -1,0 +1,46 @@
+#!/bin/bash
+
+apt update
+apt upgrade
+
+echo is this IP of your machine?
+
+echo " " >> /etc/hosts
+echo "192.168.1.11 k8w1" >> /etc/hosts
+echo "192.168.1.10 k8ctrl" >> /etc/hosts
+
+hostnamectl set-hostname k8ctrl
+#hostnamectl set-hostname worker1
+
+modprobe br_netfilter
+modprobe overlay
+
+cat << EOF | tee /etc/modules-load.d/k8s-modules.conf
+br_netfilter
+overlay
+EOF
+
+cat << EOF |  tee /etc/sysctl.d/k8s.conf
+net.bridge.bridge-nf-call-ip6tables = 1
+net.bridge.bridge-nf-call-iptables = 1
+net.ipv4.ip_forward = 1
+EOF
+
+sysctl --system
+
+apt-get update ; apt-get install -y containerd
+mkdir -p /etc/containerd
+containerd config default | tee /etc/containerd/config.toml
+sed -i "s/SystemdCgroup = false/SystemdCgroup = true/g" /etc/containerd/config.toml
+
+systemctl restart containerd
+
+swapoff -a
+
+apt-get install -y apt-transport-https curl
+
+curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add
+
+apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"
+
+apt install -y kubeadm kubelet kubectl
