@@ -1,0 +1,24 @@
+   ON Control Plane
+   
+   kubeadm init --pod-network-cidr=10.244.0.0/16 --apiserver-advertise-address=<162.251.147.180> # Replace your IP
+   lsb_release -a 
+   kubectl get nodes
+   export KUBECONFIG=/etc/kubernetes/admin.conf
+   kubectl get nodes
+   
+   #Continuously watching nodes joining.
+   watch kubectl get nodes
+  
+   # Flanner netwokr config, use as it is.
+   kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+   
+   # Confirmin worker nodes joined
+   kubectl get nodes
+   
+   # Deploy and check if cluster works!! WOW
+   
+   kubectl create deployment nginx --image=nginx
+   kubectl get deployments nginx
+   kubectl create service nodeport nginx --tcp=80:80
+   kubectl get svc
+   curl localhost:30658
