@@ -52,3 +52,14 @@ curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add
 apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"
 
 apt install -y kubeadm kubelet kubectl
+
+######################################################
+
+# install bash-completion
+sudo apt-get install bash-completion
+
+# Add the completion script to your .bashrc file
+echo 'source <(kubectl completion bash)' >>~/.bashrc
+
+# Apply changes
+source ~/.bashrc
