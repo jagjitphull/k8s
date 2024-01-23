@@ -7,17 +7,20 @@ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o 
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
   $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
-apt upgrade
+#If you want to upgrade the OS/Distro, then unhash the below line.
+#apt upgrade
 
+#Customize the below lines to suit your IP's and hostname, REMEMBER TO UNHASH the lines after modification
 echo is this IP of your machine?
-
 echo " " >> /etc/hosts
 echo "192.168.1.11 k8w1" >> /etc/hosts
 echo "192.168.1.10 k8ctrl" >> /etc/hosts
 
 
-
+#Use the first line for CP node only
 hostnamectl set-hostname k8ctrl
+
+# Use the below for Worker Node only, hash the above line when you run on worker node.
 #hostnamectl set-hostname worker1
 
 modprobe br_netfilter
@@ -43,6 +46,7 @@ sed -i "s/SystemdCgroup = false/SystemdCgroup = true/g" /etc/containerd/config.t
 
 systemctl restart containerd
 
+# Also remember to modify the swap line in /etc/fstab file.
 swapoff -a
 
 apt-get install -y apt-transport-https curl
