@@ -12,10 +12,6 @@ hostnamectl set-hostname cp
 # Use the below for Worker Node only, hash the above line when you run on worker node.
 #hostnamectl set-hostname w1
 
-
-cat k8s_install-2.sh 
-#!/bin/bash
-
 cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
 overlay
 br_netfilter
