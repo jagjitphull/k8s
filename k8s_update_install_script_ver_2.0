@@ -41,16 +41,24 @@ echo "deb [signed-by=/etc/apt/keyrings/cri-o-apt-keyring.gpg] https://pkgs.k8s.i
     tee /etc/apt/sources.list.d/cri-o.list
 
 sudo apt-get update -y
-sudo apt-get install -y cri-o
+#sudo apt-get install -y cri-o
 
-sudo systemctl daemon-reload
-sudo systemctl enable crio --now
-sudo systemctl start crio.service
+#sudo systemctl daemon-reload
+#sudo systemctl enable crio --now
+#sudo systemctl start crio.service
 
-VERSION="v1.28.0"
-wget https://github.com/kubernetes-sigs/cri-tools/releases/download/$VERSION/crictl-$VERSION-linux-amd64.tar.gz
-sudo tar zxvf crictl-$VERSION-linux-amd64.tar.gz -C /usr/local/bin
-rm -f crictl-$VERSION-linux-amd64.tar.gz
+apt-get update ; apt-get install -y containerd.io
+mkdir -p /etc/containerd
+containerd config default | tee /etc/containerd/config.toml
+sed -i "s/SystemdCgroup = false/SystemdCgroup = true/g" /etc/containerd/config.toml
+
+systemctl restart containerd
+
+
+#VERSION="v1.28.0"
+#wget https://github.com/kubernetes-sigs/cri-tools/releases/download/$VERSION/crictl-$VERSION-linux-amd64.tar.gz
+#sudo tar zxvf crictl-$VERSION-linux-amd64.tar.gz -C /usr/local/bin
+#rm -f crictl-$VERSION-linux-amd64.tar.gz
 
 KUBERNETES_VERSION=1.29
 
