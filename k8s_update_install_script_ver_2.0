@@ -1,5 +1,16 @@
 #!/bin/bash
 
+#Customize the below lines to suit your IP's and hostname, REMEMBER TO UNHASH the lines after modification
+echo is this IP of your machine?
+echo " " >> /etc/hosts
+echo "192.168.1.11 k8w1" >> /etc/hosts
+echo "192.168.1.10 k8ctrl" >> /etc/hosts
+
+#Use the first line for CP node only
+hostnamectl set-hostname cp
+
+# Use the below for Worker Node only, hash the above line when you run on worker node.
+#hostnamectl set-hostname w1
 
 
 cat k8s_install-2.sh 
