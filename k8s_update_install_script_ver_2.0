@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#This the latest script for k8s version > 1.28.
+
 #Customize the below lines to suit your IP's and hostname, REMEMBER TO UNHASH the lines after modification
 echo is this IP of your machine?
 echo " " >> /etc/hosts
