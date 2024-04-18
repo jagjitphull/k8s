@@ -35,17 +35,16 @@ sudo swapoff -a
 sudo apt-get update -y
 sudo apt-get install -y software-properties-common curl apt-transport-https ca-certificates
 
-curl -fsSL https://pkgs.k8s.io/addons:/cri-o:/prerelease:/main/deb/Release.key |
-    gpg --dearmor -o /etc/apt/keyrings/cri-o-apt-keyring.gpg
-echo "deb [signed-by=/etc/apt/keyrings/cri-o-apt-keyring.gpg] https://pkgs.k8s.io/addons:/cri-o:/prerelease:/main/deb/ /" |
-    tee /etc/apt/sources.list.d/cri-o.list
-
-sudo apt-get update -y
+##################**********************************************************############################################################
+#IF USING CRI-O
+#curl -fsSL https://pkgs.k8s.io/addons:/cri-o:/prerelease:/main/deb/Release.key |gpg --dearmor -o /etc/apt/keyrings/cri-o-apt-keyring.gpg
+#echo "deb [signed-by=/etc/apt/keyrings/cri-o-apt-keyring.gpg] https://pkgs.k8s.io/addons:/cri-o:/prerelease:/main/deb/ /" |tee /etc/apt/sources.list.d/cri-o.list
+#sudo apt-get update -y
 #sudo apt-get install -y cri-o
-
 #sudo systemctl daemon-reload
 #sudo systemctl enable crio --now
 #sudo systemctl start crio.service
+###################************************************************************##########################################################
 
 apt-get update ; apt-get install -y containerd.io
 mkdir -p /etc/containerd
@@ -54,7 +53,7 @@ sed -i "s/SystemdCgroup = false/SystemdCgroup = true/g" /etc/containerd/config.t
 
 systemctl restart containerd
 
-
+#FOR CRI CLI Tools
 #VERSION="v1.28.0"
 #wget https://github.com/kubernetes-sigs/cri-tools/releases/download/$VERSION/crictl-$VERSION-linux-amd64.tar.gz
 #sudo tar zxvf crictl-$VERSION-linux-amd64.tar.gz -C /usr/local/bin
@@ -67,8 +66,6 @@ curl -fsSL https://pkgs.k8s.io/core:/stable:/v$KUBERNETES_VERSION/deb/Release.ke
 echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v$KUBERNETES_VERSION/deb/ /" | sudo tee /etc/apt/sources.list.d/kubernetes.list
 
 sudo apt-get update -y
-
-
 sudo apt install kubelet kubeadm kubectl
 
 ######################################################
