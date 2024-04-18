@@ -3,8 +3,8 @@
 #Customize the below lines to suit your IP's and hostname, REMEMBER TO UNHASH the lines after modification
 echo is this IP of your machine?
 echo " " >> /etc/hosts
-echo "192.168.1.11 k8w1" >> /etc/hosts
-echo "192.168.1.10 k8ctrl" >> /etc/hosts
+echo "192.168.1.11 w1" >> /etc/hosts
+echo "192.168.1.10 cp" >> /etc/hosts
 
 #Use the first line for CP node only
 hostnamectl set-hostname cp
